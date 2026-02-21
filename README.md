@@ -5,8 +5,12 @@ A Matrix View visualization of Hong Kong's daily temperature data built with **R
 ---
 
 ## 📸 Preview
-.src/assets/preview.png
-.src/assets/preview1.png
+
+### Max Temperature View
+![Max Temperature View](src/assets/preview.png)
+
+### Min Temperature View  
+![Min Temperature View](src/assets/preview1.png)
 ---
 
 ## 🛠️ Tech Stack
