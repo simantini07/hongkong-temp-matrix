@@ -1,5 +1,5 @@
 /**
- * TemperatureMatrix.jsx
+ * App.jsx
  * 
  * Matrix View for Hong Kong Monthly Temperature Data
  * - X-axis: Year (last 10 years)

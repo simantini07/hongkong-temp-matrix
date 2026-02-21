@@ -1,16 +1,165 @@
-# React + Vite
+# 🌡️ Hong Kong Monthly Temperature Matrix
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Matrix View visualization of Hong Kong's daily temperature data built with **React** and **D3.js**, created for CSCE679 Assignment 1.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📸 Preview
 
-## React Compiler
+The visualization displays a 10-year × 12-month matrix where:
+- Each **cell** represents one month of a specific year
+- **Background color** encodes the average temperature (blue = cold, red = hot)
+- **Mini line charts** inside each cell show daily temperature fluctuations
+- A **toggle button** switches between Max and Min temperature views
+- **Hovering** over any cell shows a tooltip with the date and temperature value
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Tool | Purpose |
+|------|---------|
+| [React](https://react.dev/) | UI framework |
+| [D3.js](https://d3js.org/) | Data visualization |
+| [Vite](https://vitejs.dev/) | Build tool & dev server |
+
+---
+
+## 📁 Project Structure
+
+```
+hongkong-temp-matrix/
+├── public/
+│   └── temperature_daily.csv     # Raw temperature dataset
+├── src/
+│   ├── App.jsx                   # Root component — imports TemperatureMatrix
+│   ├── TemperatureMatrix.jsx     # Main visualization component
+│   └── main.jsx                  # React entry point
+├── index.css                     # Global CSS reset (no scrollbars)
+├── index.html
+├── package.json
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- npm (comes with Node.js)
+
+Check your versions:
+```bash
+node -v
+npm -v
+```
+
+---
+
+### Installation & Setup
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/YOUR_USERNAME/hongkong-temp-matrix.git
+cd hongkong-temp-matrix
+```
+
+**2. Install dependencies**
+```bash
+npm install
+```
+
+**3. Install D3.js** (if not already in package.json)
+```bash
+npm install d3
+```
+
+**4. Run the development server**
+```bash
+npm run dev
+```
+
+**5. Open in browser**
+```
+http://localhost:5173
+```
+
+---
+
+## 📊 Dataset
+
+- **File:** `public/temperature_daily.csv`
+- **Source:** Hong Kong Observatory daily temperature records
+- **Range:** 1997–2017 (visualization focuses on last 10 years)
+- **Columns:**
+  | Column | Description |
+  |--------|-------------|
+  | `date` | Date in `YYYY-MM-DD` format |
+  | `max_temperature` | Daily maximum temperature (°C) |
+  | `min_temperature` | Daily minimum temperature (°C) |
+
+> **Note:** Data ends on 2017-10-28, so November and December 2017 are intentionally empty — this matches the original dataset.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| **Matrix Layout** | X-axis = Year, Y-axis = Month (last 10 years) |
+| **Color Encoding** | Blue (0°C) → Yellow → Orange → Dark Red (40°C) |
+| **Toggle Max/Min** | Click the button in the header to switch views |
+| **Tooltip** | Hover over any cell to see date and temperature |
+| **Mini Line Charts** | Green line = daily max, Light blue = daily min |
+| **Color Legend** | Gradient bar on the right maps colors to °C values |
+| **Responsive** | SVG auto-resizes to fill the browser window |
+
+---
+
+## 🧱 Code Architecture
+
+The code is split into clearly named, modular functions:
+
+```
+parseRows()       → Parses raw CSV into clean daily records
+buildGrouped()    → Filters last 10 years, groups by year → month
+buildCells()      → Builds flat array of cell data for D3
+
+drawAxes()        → Renders year (top) and month (left) labels
+drawLegend()      → Renders the color gradient legend on the right
+drawMiniChart()   → Draws the daily max/min line chart inside each cell
+drawMatrix()      → Orchestrates the full SVG render
+```
+
+---
+
+## 🤖 AI Usage Log
+
+This project was developed with assistance from Claude (Anthropic).
+
+**How AI was used:**
+- Initial scaffold of the React + D3 matrix structure
+- Iterative debugging of layout issues (scrollbar, white gaps, centering)
+- Color scale direction correction (inverted RdYlBu interpolator)
+- ResizeObserver integration for responsive SVG sizing
+- Code commenting and modularization improvements
+
+**Reflection:**
+AI was helpful for quickly generating D3 boilerplate and debugging layout edge cases (e.g. the `minHeight: 0` flex fix). However, understanding *why* each fix worked required reading the D3 and CSS docs — AI accelerated iteration but didn't replace understanding. The dataset gap for 2017 Nov/Dec was caught by visually comparing output to the reference image, not by AI.
+
+---
+
+## 📝 Assignment Info
+
+- **Course:** CSCE679 — Data Visualization
+- **Assignment:** Assignment 1 — Matrix View
+- **University:** Texas A&M University
+
+---
+
+## 📄 License
+
+This project is for educational purposes only.
