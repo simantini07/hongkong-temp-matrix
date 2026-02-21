@@ -5,8 +5,8 @@ A Matrix View visualization of Hong Kong's daily temperature data built with **R
 ---
 
 ## 📸 Preview
-src/assets/preview.png
-src/assets/preview1.png
+.src/assets/preview.png
+.src/assets/preview1.png
 ---
 
 ## 🛠️ Tech Stack
@@ -128,32 +128,3 @@ drawMiniChart()   → Draws the daily max/min line chart inside each cell
 drawMatrix()      → Orchestrates the full SVG render
 ```
 
----
-
-## 🤖 AI Usage Log
-
-This project was developed with assistance from Claude (Anthropic).
-
-**How AI was used:**
-- Initial scaffold of the React + D3 matrix structure
-- Iterative debugging of layout issues (scrollbar, white gaps, centering)
-- Color scale direction correction (inverted RdYlBu interpolator)
-- ResizeObserver integration for responsive SVG sizing
-- Code commenting and modularization improvements
-
-**Reflection:**
-AI was helpful for quickly generating D3 boilerplate and debugging layout edge cases (e.g. the `minHeight: 0` flex fix). However, understanding *why* each fix worked required reading the D3 and CSS docs — AI accelerated iteration but didn't replace understanding. The dataset gap for 2017 Nov/Dec was caught by visually comparing output to the reference image, not by AI.
-
----
-
-## 📝 Assignment Info
-
-- **Course:** CSCE679 — Data Visualization
-- **Assignment:** Assignment 1 — Matrix View
-- **University:** Texas A&M University
-
----
-
-## 📄 License
-
-This project is for educational purposes only.
