@@ -5,14 +5,8 @@ A Matrix View visualization of Hong Kong's daily temperature data built with **R
 ---
 
 ## 📸 Preview
-
-The visualization displays a 10-year × 12-month matrix where:
-- Each **cell** represents one month of a specific year
-- **Background color** encodes the average temperature (blue = cold, red = hot)
-- **Mini line charts** inside each cell show daily temperature fluctuations
-- A **toggle button** switches between Max and Min temperature views
-- **Hovering** over any cell shows a tooltip with the date and temperature value
-
+src/assets/preview.png
+src/assets/preview1.png
 ---
 
 ## 🛠️ Tech Stack
