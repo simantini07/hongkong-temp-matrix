@@ -1,6 +1,6 @@
 # 🌡️ Hong Kong Monthly Temperature Matrix
 
-A Matrix View visualization of Hong Kong's daily temperature data built with **React** and **D3.js**, created for CSCE679 Assignment 1.
+A Matrix View visualization of Hong Kong's daily temperature data built with **React** and **D3.js**.
 
 ---
 
@@ -9,8 +9,9 @@ A Matrix View visualization of Hong Kong's daily temperature data built with **R
 ### Max Temperature View
 ![Max Temperature View](src/assets/preview.png)
 
-### Min Temperature View  
+### Min Temperature View
 ![Min Temperature View](src/assets/preview1.png)
+
 ---
 
 ## 🛠️ Tech Stack
@@ -28,12 +29,14 @@ A Matrix View visualization of Hong Kong's daily temperature data built with **R
 ```
 hongkong-temp-matrix/
 ├── public/
-│   └── temperature_daily.csv     # Raw temperature dataset
+│   └── temperature_daily.csv     # Raw temperature dataset (1997–2017)
 ├── src/
-│   ├── App.jsx                   # Root component — imports TemperatureMatrix
-│   ├── TemperatureMatrix.jsx     # Main visualization component
-│   └── main.jsx                  # React entry point
-├── index.css                     # Global CSS reset (no scrollbars)
+│   ├── App.jsx                   # Main component — all visualization logic lives here
+│   ├── main.jsx                  # React entry point
+│   └── assets/
+│       ├── preview.png           # Screenshot: Max temperature view
+│       └── preview1.png          # Screenshot: Min temperature view
+├── index.css                     # Global CSS reset 
 ├── index.html
 ├── package.json
 └── README.md
@@ -91,15 +94,14 @@ http://localhost:5173
 
 - **File:** `public/temperature_daily.csv`
 - **Source:** Hong Kong Observatory daily temperature records
-- **Range:** 1997–2017 (visualization focuses on last 10 years)
+- **Range:** 1997–2017 (visualization focuses on last 10 years: 2008–2017)
 - **Columns:**
+
   | Column | Description |
   |--------|-------------|
   | `date` | Date in `YYYY-MM-DD` format |
   | `max_temperature` | Daily maximum temperature (°C) |
   | `min_temperature` | Daily minimum temperature (°C) |
-
-> **Note:** Data ends on 2017-10-28, so November and December 2017 are intentionally empty — this matches the original dataset.
 
 ---
 
@@ -109,26 +111,32 @@ http://localhost:5173
 |---------|-------------|
 | **Matrix Layout** | X-axis = Year, Y-axis = Month (last 10 years) |
 | **Color Encoding** | Blue (0°C) → Yellow → Orange → Dark Red (40°C) |
-| **Toggle Max/Min** | Click the button in the header to switch views |
-| **Tooltip** | Hover over any cell to see date and temperature |
-| **Mini Line Charts** | Green line = daily max, Light blue = daily min |
-| **Color Legend** | Gradient bar on the right maps colors to °C values |
-| **Responsive** | SVG auto-resizes to fill the browser window |
+| **Toggle Max/Min** | Click the button in the header to switch between views |
+| **Tooltip** | Hover over any cell to see the date and peak temperature value |
+| **Mini Line Charts** | Green line = daily max, Light blue = daily min per cell |
+| **Color Legend** | Gradient bar on the right maps colors to °C values (0–40) |
+| **Responsive** | SVG auto-resizes to fill the browser window via ResizeObserver |
 
 ---
 
 ## 🧱 Code Architecture
 
-The code is split into clearly named, modular functions:
+All visualization logic is in `src/App.jsx`, split into clearly named, single-responsibility functions:
 
 ```
-parseRows()       → Parses raw CSV into clean daily records
-buildGrouped()    → Filters last 10 years, groups by year → month
-buildCells()      → Builds flat array of cell data for D3
+── Data Helpers ──────────────────────────────────────────
+parseRows()       → Parses raw CSV strings into typed JS objects
+buildGrouped()    → Filters last 10 years, groups by year → month → day[]
+buildCells()      → Builds flat cell array with absMax / absMin per month
 
-drawAxes()        → Renders year (top) and month (left) labels
+── Drawing Functions ─────────────────────────────────────
+drawAxes()        → Renders year labels (top) and month labels (left)
 drawLegend()      → Renders the color gradient legend on the right
-drawMiniChart()   → Draws the daily max/min line chart inside each cell
-drawMatrix()      → Orchestrates the full SVG render
+drawMiniChart()   → Draws daily max/min line chart inside each cell
+drawMatrix()      → Orchestrates the full SVG render (calls all above)
+
+── React Component ───────────────────────────────────────
+App()             → Manages state, loads CSV, wires D3 to DOM via refs
 ```
 
+---
